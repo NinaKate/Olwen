@@ -1,0 +1,669 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     22821,        661]
+NotebookOptionsPosition[     20800,        600]
+NotebookOutlinePosition[     21142,        615]
+CellTagsIndexPosition[     21099,        612]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{
+    "Example", " ", "notebook", " ", "for", " ", "calculating", " ", 
+     "tensors", " ", "in", " ", "a", " ", "flat", " ", "Friedmann"}], "-", 
+    "Robertson", "-", 
+    RowBox[{"Walker", " ", "Space"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"SetDirectory", "[", 
+    RowBox[{"(*", 
+     RowBox[{"Directory", " ", "where", " ", 
+      RowBox[{"ricci", ".", "m"}], " ", "is", " ", "located"}], "*)"}], "]"}],
+    "\[IndentingNewLine]", 
+   RowBox[{"<<", "ricci.m"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{"ClearRicciPackage", "[", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"FirstIndex", "=", "1"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"LastIndex", "=", "4"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Coordinate", "[", "1", "]"}], "=", "t"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Coordinate", "[", "2", "]"}], "=", "x"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Coordinate", "[", "3", "]"}], "=", "y"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Coordinate", "[", "4", "]"}], "=", "z"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+     RowBox[{
+     "Define", " ", "the", " ", "Minkowski", " ", "metric", " ", "eta", " ", 
+      "and", " ", "the", " ", "perturbation", " ", "elements", " ", "A"}], 
+     ",", "B"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"MetricTensor", "[", 
+        RowBox[{"i", ",", "j"}], "]"}], "=", "0"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "1", ",", "4"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "1", ",", "4"}], "}"}]}], "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"MetricTensor", "[", 
+     RowBox[{"1", ",", "1"}], "]"}], "=", 
+    RowBox[{"-", "1"}]}], "\n", 
+   RowBox[{
+    RowBox[{"MetricTensor", "[", 
+     RowBox[{"2", ",", "2"}], "]"}], "=", 
+    RowBox[{
+     RowBox[{"a", "[", "t", "]"}], "^", "2"}]}], "\n", 
+   RowBox[{
+    RowBox[{"MetricTensor", "[", 
+     RowBox[{"3", ",", "3"}], "]"}], "=", 
+    RowBox[{
+     RowBox[{"a", "[", "t", "]"}], "^", "2"}]}], "\n", 
+   RowBox[{
+    RowBox[{"MetricTensor", "[", 
+     RowBox[{"4", ",", "4"}], "]"}], "=", 
+    RowBox[{
+     RowBox[{"a", "[", "t", "]"}], "^", "2"}]}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Now", " ", "compute", " ", "the", " ", "inverse", " ", "metric", " ", 
+     "and", " ", "approximate", " ", "it", " ", "to", " ", "second", " ", 
+     "order"}], "*)"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing the inverse metric\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ComputeInverseMetric", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+   "\n", 
+   RowBox[{
+    RowBox[{"Do", "[", 
+     RowBox[{
+      RowBox[{"Print", "[", 
+       RowBox[{"\"\<InverseMetric[\>\"", ",", 
+        RowBox[{"(", 
+         RowBox[{"i", "-", "1"}], ")"}], ",", 
+        RowBox[{"(", 
+         RowBox[{"j", "-", "1"}], ")"}], ",", "\"\<] = \>\"", ",", 
+        RowBox[{"Simplify", "[", 
+         RowBox[{"InverseMetric", "[", 
+          RowBox[{"i", ",", "j"}], "]"}], "]"}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "FirstIndex", ",", "LastIndex"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "FirstIndex", ",", "LastIndex"}], "}"}]}], "]"}], 
+    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Compute", " ", "the", " ", "rest", " ", "of", " ", "the", " ", "stuff", 
+     " ", "we", " ", "need"}], "*)"}], "\[IndentingNewLine]", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing the connection\>\"", "]"}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"ComputeCovariantChristoffel", "[", "]"}], ";"}], 
+   "\[IndentingNewLine]", "\n", 
+   RowBox[{
+    RowBox[{"ComputeChristoffel", "[", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing the Riemann tensor\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ComputeRiemann", "[", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing the Ricci tensor\>\"", "]"}], ";"}], 
+   "\n", 
+   RowBox[{
+    RowBox[{"ComputeRicci", "[", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing the scalar curvature\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ComputeScalarCurvature", "[", "]"}], ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", "\"\<Computing the Einstein tensor\>\"", "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"ComputeEinstein", "[", "]"}], ";"}], "\[IndentingNewLine]", "\n", 
+   RowBox[{"(*", 
+    RowBox[{
+    "Print", " ", "Curvature", " ", "Tensor", " ", "in", " ", "Weinberg", " ",
+      "Convention"}], "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Do", "[", 
+     RowBox[{
+      RowBox[{"Print", "[", 
+       RowBox[{"\"\<Ricci[\>\"", ",", 
+        RowBox[{"(", 
+         RowBox[{"i", "-", "1"}], ")"}], ",", 
+        RowBox[{"(", 
+         RowBox[{"j", "-", "1"}], ")"}], ",", "\"\<] = \>\"", ",", 
+        RowBox[{"-", 
+         RowBox[{"Ricci", "[", 
+          RowBox[{"i", ",", "j"}], "]"}]}]}], "]"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "FirstIndex", ",", "LastIndex"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "FirstIndex", ",", "LastIndex"}], "}"}]}], "]"}], 
+    ";"}], "\n", 
+   RowBox[{
+    RowBox[{"Print", "[", 
+     RowBox[{"\"\<Scalar Curvature = \>\"", ",", 
+      RowBox[{"-", "ScalarCurvature"}]}], "]"}], ";"}], "\n", 
+   "\[IndentingNewLine]", "\[IndentingNewLine]"}]}]], "Input",
+ CellChangeTimes->{{3.6980586117011147`*^9, 3.698058668448018*^9}, {
+  3.6980587030074997`*^9, 3.6980587356969*^9}, {3.698058769372754*^9, 
+  3.698058786153672*^9}}],
+
+Cell[BoxData["\<\"/home/whkinney/Documents/Courses/2016-2017/PHY555/Code/\
+ricci\"\>"], "Output",
+ CellChangeTimes->{3.69805867179732*^9}],
+
+Cell[BoxData[
+ RowBox[{"-", "1"}]], "Output",
+ CellChangeTimes->{3.698058671797969*^9}],
+
+Cell[BoxData[
+ SuperscriptBox[
+  RowBox[{"a", "[", "t", "]"}], "2"]], "Output",
+ CellChangeTimes->{3.698058671798538*^9}],
+
+Cell[BoxData[
+ SuperscriptBox[
+  RowBox[{"a", "[", "t", "]"}], "2"]], "Output",
+ CellChangeTimes->{3.698058671829093*^9}],
+
+Cell[BoxData[
+ SuperscriptBox[
+  RowBox[{"a", "[", "t", "]"}], "2"]], "Output",
+ CellChangeTimes->{3.698058671829657*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Computing the inverse metric\"\>"], "Print",
+ CellChangeTimes->{3.698058671837393*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "0", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", 
+   RowBox[{"-", "1"}]}],
+  SequenceForm["InverseMetric[", 0, 0, "] = ", -1],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.69805867183808*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 0, 1, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671838866*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "2", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 0, 2, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718393183`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 0, 3, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718397512`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "0", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 1, 0, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671840228*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", 
+   FractionBox["1", 
+    SuperscriptBox[
+     RowBox[{"a", "[", "t", "]"}], "2"]]}],
+  SequenceForm[
+  "InverseMetric[", 1, 1, "] = ", $CellContext`a[$CellContext`t]^(-2)],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718406773`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "2", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 1, 2, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671870723*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "1", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 1, 3, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671871142*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "0", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 2, 0, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718715353`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 2, 1, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671871934*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "2", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", 
+   FractionBox["1", 
+    SuperscriptBox[
+     RowBox[{"a", "[", "t", "]"}], "2"]]}],
+  SequenceForm[
+  "InverseMetric[", 2, 2, "] = ", $CellContext`a[$CellContext`t]^(-2)],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671872532*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "2", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 2, 3, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671872999*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "0", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 3, 0, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718734303`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "1", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 3, 1, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718738403`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "2", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", "0"}],
+  SequenceForm["InverseMetric[", 3, 2, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718742123`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"InverseMetric[\"\>", "\[InvisibleSpace]", "3", 
+   "\[InvisibleSpace]", "3", "\[InvisibleSpace]", "\<\"] = \"\>", 
+   "\[InvisibleSpace]", 
+   FractionBox["1", 
+    SuperscriptBox[
+     RowBox[{"a", "[", "t", "]"}], "2"]]}],
+  SequenceForm[
+  "InverseMetric[", 3, 3, "] = ", $CellContext`a[$CellContext`t]^(-2)],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718745728`*^9}],
+
+Cell[BoxData["\<\"Computing the connection\"\>"], "Print",
+ CellChangeTimes->{3.6980586718749237`*^9}],
+
+Cell[BoxData["\<\"Computing the Riemann tensor\"\>"], "Print",
+ CellChangeTimes->{3.698058671875229*^9}],
+
+Cell[BoxData["\<\"Computing the Ricci tensor\"\>"], "Print",
+ CellChangeTimes->{3.698058671875553*^9}],
+
+Cell[BoxData["\<\"Computing the scalar curvature\"\>"], "Print",
+ CellChangeTimes->{3.698058671875846*^9}],
+
+Cell[BoxData["\<\"Computing the Einstein tensor\"\>"], "Print",
+ CellChangeTimes->{3.698058671876203*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "0", "\[InvisibleSpace]", 
+   "0", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   FractionBox[
+    RowBox[{"3", " ", 
+     RowBox[{
+      SuperscriptBox["a", "\[Prime]\[Prime]",
+       MultilineFunction->None], "[", "t", "]"}]}], 
+    RowBox[{"a", "[", "t", "]"}]]}],
+  SequenceForm[
+  "Ricci[", 0, 0, "] = ", 3 $CellContext`a[$CellContext`t]^(-1) 
+   Derivative[2][$CellContext`a][$CellContext`t]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671876589*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "0", "\[InvisibleSpace]", 
+   "1", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 0, 1, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718770103`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "0", "\[InvisibleSpace]", 
+   "2", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 0, 2, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671877358*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "0", "\[InvisibleSpace]", 
+   "3", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 0, 3, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671877707*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "1", "\[InvisibleSpace]", 
+   "0", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 1, 0, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718780537`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "1", "\[InvisibleSpace]", 
+   "1", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "2"}], " ", 
+     SuperscriptBox[
+      RowBox[{
+       SuperscriptBox["a", "\[Prime]",
+        MultilineFunction->None], "[", "t", "]"}], "2"]}], "-", 
+    RowBox[{
+     RowBox[{"a", "[", "t", "]"}], " ", 
+     RowBox[{
+      SuperscriptBox["a", "\[Prime]\[Prime]",
+       MultilineFunction->None], "[", "t", "]"}]}]}]}],
+  SequenceForm[
+  "Ricci[", 1, 1, 
+   "] = ", (-2) 
+    Derivative[
+      1][$CellContext`a][$CellContext`t]^2 - $CellContext`a[$CellContext`t] 
+   Derivative[2][$CellContext`a][$CellContext`t]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671878459*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "1", "\[InvisibleSpace]", 
+   "2", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 1, 2, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671878847*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "1", "\[InvisibleSpace]", 
+   "3", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 1, 3, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671879196*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "2", "\[InvisibleSpace]", 
+   "0", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 2, 0, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718795433`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "2", "\[InvisibleSpace]", 
+   "1", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 2, 1, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718798933`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "2", "\[InvisibleSpace]", 
+   "2", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "2"}], " ", 
+     SuperscriptBox[
+      RowBox[{
+       SuperscriptBox["a", "\[Prime]",
+        MultilineFunction->None], "[", "t", "]"}], "2"]}], "-", 
+    RowBox[{
+     RowBox[{"a", "[", "t", "]"}], " ", 
+     RowBox[{
+      SuperscriptBox["a", "\[Prime]\[Prime]",
+       MultilineFunction->None], "[", "t", "]"}]}]}]}],
+  SequenceForm[
+  "Ricci[", 2, 2, 
+   "] = ", (-2) 
+    Derivative[
+      1][$CellContext`a][$CellContext`t]^2 - $CellContext`a[$CellContext`t] 
+   Derivative[2][$CellContext`a][$CellContext`t]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718803368`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "2", "\[InvisibleSpace]", 
+   "3", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 2, 3, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671880725*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", 
+   "0", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 3, 0, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671881076*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", 
+   "1", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 3, 1, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671881424*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", 
+   "2", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", "0"}],
+  SequenceForm["Ricci[", 3, 2, "] = ", 0],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671881773*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Ricci[\"\>", "\[InvisibleSpace]", "3", "\[InvisibleSpace]", 
+   "3", "\[InvisibleSpace]", "\<\"] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "2"}], " ", 
+     SuperscriptBox[
+      RowBox[{
+       SuperscriptBox["a", "\[Prime]",
+        MultilineFunction->None], "[", "t", "]"}], "2"]}], "-", 
+    RowBox[{
+     RowBox[{"a", "[", "t", "]"}], " ", 
+     RowBox[{
+      SuperscriptBox["a", "\[Prime]\[Prime]",
+       MultilineFunction->None], "[", "t", "]"}]}]}]}],
+  SequenceForm[
+  "Ricci[", 3, 3, 
+   "] = ", (-2) 
+    Derivative[
+      1][$CellContext`a][$CellContext`t]^2 - $CellContext`a[$CellContext`t] 
+   Derivative[2][$CellContext`a][$CellContext`t]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.698058671882175*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"Scalar Curvature = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"-", 
+    FractionBox[
+     RowBox[{"6", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{
+          SuperscriptBox["a", "\[Prime]",
+           MultilineFunction->None], "[", "t", "]"}], "2"], "+", 
+        RowBox[{
+         RowBox[{"a", "[", "t", "]"}], " ", 
+         RowBox[{
+          SuperscriptBox["a", "\[Prime]\[Prime]",
+           MultilineFunction->None], "[", "t", "]"}]}]}], ")"}]}], 
+     SuperscriptBox[
+      RowBox[{"a", "[", "t", "]"}], "2"]]}]}],
+  SequenceForm[
+  "Scalar Curvature = ", (-6) $CellContext`a[$CellContext`t]^(-2) (
+    Derivative[
+      1][$CellContext`a][$CellContext`t]^2 + $CellContext`a[$CellContext`t] 
+     Derivative[2][$CellContext`a][$CellContext`t])],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6980586718826303`*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 911},
+WindowMargins->{{1401, Automatic}, {357, Automatic}},
+FrontEndVersion->"11.0 for Linux x86 (64-bit) (September 21, 2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 5888, 160, 1186, "Input"],
+Cell[6471, 184, 138, 2, 32, "Output"],
+Cell[6612, 188, 87, 2, 32, "Output"],
+Cell[6702, 192, 121, 3, 34, "Output"],
+Cell[6826, 197, 121, 3, 34, "Output"],
+Cell[6950, 202, 121, 3, 34, "Output"],
+Cell[CellGroupData[{
+Cell[7096, 209, 104, 1, 24, "Print"],
+Cell[7203, 212, 336, 8, 24, "Print"],
+Cell[7542, 222, 317, 7, 24, "Print"],
+Cell[7862, 231, 319, 7, 24, "Print"],
+Cell[8184, 240, 319, 7, 24, "Print"],
+Cell[8506, 249, 317, 7, 24, "Print"],
+Cell[8826, 258, 435, 11, 45, "Print"],
+Cell[9264, 271, 317, 7, 24, "Print"],
+Cell[9584, 280, 317, 7, 24, "Print"],
+Cell[9904, 289, 319, 7, 24, "Print"],
+Cell[10226, 298, 317, 7, 24, "Print"],
+Cell[10546, 307, 433, 11, 45, "Print"],
+Cell[10982, 320, 317, 7, 24, "Print"],
+Cell[11302, 329, 319, 7, 24, "Print"],
+Cell[11624, 338, 319, 7, 24, "Print"],
+Cell[11946, 347, 319, 7, 24, "Print"],
+Cell[12268, 356, 435, 11, 45, "Print"],
+Cell[12706, 369, 102, 1, 24, "Print"],
+Cell[12811, 372, 104, 1, 24, "Print"],
+Cell[12918, 375, 102, 1, 24, "Print"],
+Cell[13023, 378, 106, 1, 24, "Print"],
+Cell[13132, 381, 105, 1, 24, "Print"],
+Cell[13240, 384, 569, 14, 44, "Print"],
+Cell[13812, 400, 299, 6, 24, "Print"],
+Cell[14114, 408, 297, 6, 24, "Print"],
+Cell[14414, 416, 297, 6, 24, "Print"],
+Cell[14714, 424, 299, 6, 24, "Print"],
+Cell[15016, 432, 810, 23, 26, "Print"],
+Cell[15829, 457, 297, 6, 24, "Print"],
+Cell[16129, 465, 297, 6, 24, "Print"],
+Cell[16429, 473, 299, 6, 24, "Print"],
+Cell[16731, 481, 299, 6, 24, "Print"],
+Cell[17033, 489, 812, 23, 26, "Print"],
+Cell[17848, 514, 297, 6, 24, "Print"],
+Cell[18148, 522, 297, 6, 24, "Print"],
+Cell[18448, 530, 297, 6, 24, "Print"],
+Cell[18748, 538, 297, 6, 24, "Print"],
+Cell[19048, 546, 810, 23, 26, "Print"],
+Cell[19861, 571, 911, 25, 51, "Print"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+

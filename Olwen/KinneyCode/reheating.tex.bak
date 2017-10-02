@@ -1,0 +1,68 @@
+%
+% This is a comment. It does not appear in the final document. All comments
+% are on lines that start with a percent sign.
+%
+%
+% All documents start with a \documentclass command. This one is to user
+% the revtex4 macro package from the APS, used for Physical Review.
+\documentclass[preprint,aps]{revtex4}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{tensor}
+%
+% This loads a package for displaying figures. An example of how to display
+% a figure is below.
+%
+\usepackage{graphicx}
+
+%
+% All documents start with this command in LaTeX.
+%
+\begin{document}
+Okay, so I'm going to do this a bit informally, but hopefully it will be clear. 
+
+To begin with, since I did the maximum code, I can get to $V_{end}$ as a function of $N_k$ (also M, for the two-parameter models). Since the mechanics of the inflationary period have not changed, that stands.  Now, I also need $N_{re}$, which I believe I can find using this equation: 
+\begin{equation}
+N_{re} = -N_k-N_{RD}+\ln{\frac{a_{eq}H_{eq}}{a_0H_0}}+\ln{\frac{H_k}{H_{eq}}}-\ln{\frac{k}{a_0H_0}}
+\end{equation}
+Now, I want $N_k$, that's what I'm looking for, and I know $k$, I can just declare that $N_{RD}$ is counted from nucleosynthesis, so I know that (I think?), and I can get $H_k$ in terms of $N_k$, so I can just get $N_{re}$ as a function of $N_k$ (probably also M, but you get my point.) Note that this is independent of the equation of state, it's just a constraint on the number of e-folds that have to have happened, total. Next, I have this equation for $T_{re}$:
+
+\begin{equation}
+T_{re}=\exp\left[-\frac{3}{4}(1+w_{re})N_{re}\right]\left(\frac{3}{10\pi^2}\right)^{1/4}\left(1+\lambda\right)^{1/4}V_{end}^{1/4},
+\end{equation}
+where $\lambda$ is defined as $\lambda = \frac{1}{3/\epsilon-1}$, so $\lambda\approx 1/2$ at the end of inflation. Here is where $w_{re}$, the equation of state parameter during reheating, comes in, and straightforwardly, so that's good. At this point, $T_{re}$ is a function of $N_k$, M, $w_{re}$, and $\lambda$ (though that last is basically going to be 1/2 for pretty much every model, and isn't really something I need to worry about varying). Unless I've missed or forgotten something, then, that means that I can calculate the minimum number of e-folds with the same equation I used for the maximization, 
+\begin{equation}
+N_k-\ln{T_{re}} = 68.
+\end{equation}
+At least, it seems like that ought to work, as far as I can tell! I still need to track down values for some things (eg $N_{RD}$), but the outline seems reasonable. 
+
+
+\section{NUMBERS}
+\begin{equation}
+a_{eq}=4.15*10^{-5}(\Omega_mh^2)^{-1}
+\end{equation}
+\begin{equation}
+\Omega_mh^2=0.128\pm 0.008
+\end{equation}
+\begin{equation}
+1+z_{eq}=2.4*10^4\Omega_mh^2
+\end{equation}
+\begin{equation}
+H_{eq}^2=2\Omega_m H_0^2 a_{eq}^{-3}
+\end{equation}
+\section{QUESTIONS}
+\begin{itemize}
+\item  What value of $H_0$ do I use? 
+\item  What value of $\Omega_m$ do I use? $\Omega_mh^2$ is an observable, but I seem to remember than $h^2$ depends on $H_0$ somehow. 
+\item Do I actually need/want to use $N_k-\ln{T_{re}} = 68$, or just go with "And I know the temperature at the end of reheating [since I'm taking that to be nucleosynthesis]" and set $T_{re}$ equal to that known value (which appears to be 0.05 MeV)?
+\item I actually can't quite figure out how to get $N_{RD}$, for reasons I will explain in detail below.
+\end{itemize}
+
+\subsection{THE PROBLEM WITH $N_{RD}$}
+So my primary stumbling block here is that "number of e-folds of expansion" isn't actually a super sensible thing to talk about in a matter/radiation dominated universe, that is, when $a(t)$ is not proportional to $e^{Ht}$. I started by figuring that I would just do the standard $N = -\int Hdt$ integration from nucleosynthesis to matter-radiation equality, 
+\end{document}
+

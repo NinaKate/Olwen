@@ -1,0 +1,52 @@
+%
+% This is a comment. It does not appear in the final document. All comments
+% are on lines that start with a percent sign.
+%
+%
+% All documents start with a \documentclass command. This one is to user
+% the revtex4 macro package from the APS, used for Physical Review.
+\documentclass[preprint,aps]{revtex4}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{tensor}
+%
+% This loads a package for displaying figures. An example of how to display
+% a figure is below.
+%
+\usepackage{graphicx}
+
+%
+% All documents start with this command in LaTeX.
+%
+\begin{document}
+Alright, this REALLY ought to be very straightforward, I have no idea why I'm having such trouble, what the deuce. Anyway, this is me walking you through my math:
+Start with $a_{eq}$. I'm following the procedure shown here[\url{http://www.tapir.caltech.edu/~chirata/ph217/lec06.pdf}] (and using their values for the observables, like $\Omega_mh^2$). The method is as follows: radiation energy density goes as $\rho_r \propto a^{-4}$, while matter energy density goes as $\rho_m \propto a^{-3}$. At matter-radiation equality, $\rho_m=\rho_r$. If you take the ratio of these, we get 
+\begin{equation}
+\frac{\rho_m}{\rho_r}\propto\frac{a^{-3}}{a^{-4}}=a.
+\end{equation}
+That means that I can just take the ratio of the current energy densities, 
+\begin{equation}
+a_{eq}=\frac{\rho_{r0}}{\rho_{m0}}.
+\end{equation}
+The current radiation energy density is, according to that page, $7.8*10^{-34}g/cm^3$. The current matter density is $0.240512*10^{-29}g/cm^3$. If you take that ratio, you get $3.51563*10^{-4}$. This agrees with estimates I find elsewhere, using similar methods (I haven't seen anything in particular using any other method, though due to my internet problems, that might not mean much.) The problem is: We have just asserted and used the fact that $\rho_r=\rho_{r0}a^{-4}$, and if I go and plug in that value of $a_{eq}$ to get the value of radiation energy density at equality, I find that the radiation density alone at equality was $5.10604*10^{-20}g/cm^3$, significantly higher than the critical density for flatness for the universe. \textbf{DANGER, DANGER WILL ROBINSON, SOMETHING HAS GONE TERRIBLY WRONG.} I cannot manage to come up with another way to calculate this, though that might simply be because I can't find any formulae for $a$ that will permit it, curse my lack of textbooks and internet. 
+
+If, however, I continue with this value for $a_{eq}$, I continue on to my equation for $H_{eq}$, namely: 
+\begin{equation}
+H_{eq}^2=2\Omega_m H_0^2 a_{eq}^{-3}
+\end{equation}
+...which brings me to another question: I am not sure what value of $H_0$ I should be using, or what units I should be aiming for. That's rather a side issue, however. If I use some reasonable estimates of $\Omega_m=0.3$ and $H_0=70$ as ballparks, I find that $H_{eq}=8.22564*10^6$. This seems almost farcically large to me, but I have not come up with a way to definitely prove it to be inaccurate, so it might just be that this is a number much, much bigger than I was expecting. 
+
+The biggest problem here is how I am to calculate $N_{RD}$. This is the number of e-folds of expansion during the radiation-dominated era, that is, between nucleosynthesis and radiation-matter equality. This one has been stumping me a bit, and it was in trying to figure out how to calculate this one that I realized that what I had wasn't working. My first attempt was to calculate it as $N_{RD}=\log[a_{eq}/a_{nuc}]$, with $a_{nuc}$ the value of $a$ at nucleosynthesis, but I don't know how to calculate $a_{nuc}$. So then I figured that, well, actually all I needed was the amount of expansion, and nucleosynthesis was at $200-300$ seconds, while equality was at $~10^{11}$ seconds, so just the square root of the amount of time elapsed would do it, right? Only I don't think it makes much sense to model this as purely radiation, surely I ought to actually take the changing dynamics of the matter-radiation ratio into account, that would alter the growth rate, it isn't a step function, and moreover this isn't a slow roll scenario, so presumably what I actually ought to be doing is$N_{RD}=\log[a_{eq}H_{eq}/a_{nuc}H_{nuc}]$, and I tried, but I just got increasingly farcical answers (negative e-foldings, for example). So this part in particular confuses me because unlike the others where I have something that OUGHT to be working but apparently isn't, I can't even figure out how I should be approaching this. 
+
+The last thing is, it occurs to me that I might not actually need/want to use $N_k-\ln{T_{re}} = 68$, but rather just go with "And I know the temperature at the end of reheating [since I'm taking that to be nucleosynthesis]" and set $T_{re}$ equal to that known value (which appears to be 0.05 MeV)?
+Anyway, I've written up the code to make the calculations given user inputs of the various things that shouldn't vary between potentials ($H_0$, $N_{RD}$, etc.) and tried both approaches to get $N_{min}$, and I get egregriously wrong results both ways (I do not believe that $N_{min}$ should be either over 1000 or negative), but I honestly can't tell if that's a problem with the values I'm putting into it or what I'm doing with them. (please find code attached as well).  
+
+
+\section{Numbers}
+Alright, so if I do my calculations carefully, in natural units, I get the following values for components of the $N_{re}$ equation
+\end{document}
+

@@ -1,0 +1,24 @@
+\documentclass[11pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\pagestyle{headings}
+\author{Nina Stein}
+\title{HPC HW1}
+\begin{document}
+\maketitle
+
+\section*{Problem 1}
+
+
+
+\section*{Problem 2}
+for $f_c=0.99$, I find a performance of 1340MFlops, whereas for $f_c = 0.01$ I find a performance of 48 MFlops. I am slightly surprised by the fact that the difference between 0.5 and 0.01 is so much smaller than that between 0.5 and 0.99, because normally you need exponents to get something that dramatic, but it does make sense that you'd have a much higher performance working entirely from cache. 
+
+\section*{Problem 3}
+So my code for this is matrixadd.cpp, I compiled it with g++ (the c++ equivalent of gcc, that confused me for a while because gcc got VERY MAD AT ME) and I can go all the way up to 20k last time I checked, it takes 4.12 seconds to add them if I loop over rows first and 23.73 seconds to loop over columns first. if I use the gcc/7.2 version of g++ (instead of the default) it takes 4.15 and 23.79 seconds, respectively. Using intel/17.0's icpc, no optimization options, I get 0.73 seconds for rows first, and 23.84 for columns first, so no improvement for the latter but a significant improvement for the former; using the O1 flag for icpc (instead of the default, which is O2) results in times of 1.25 and 24.47, whereas O3 gives 0.71 (so we're back to that shortest time) and 24.67 (which is actually the longest yet, which is interesting). Please note that you DO have to unload gcc in order for intel to be willing to compile. 
+Now for gcc's optimization options! O0 is default, so now I check O1, which gives 1.92 and 24.3 (I do find it interesting that all of these make the columns first implementation even slower, if anything). O2 results in 1.19 and 24.55, whereas O3 gives me 0.72 (matching intel's best) and 22.98, making it the only one to actually reduce that second number! Impressive. I think I have now run out of optimization flags, though. 
+I am informed that the reason there is such a difference between loop orders is (which is actually more visible in my code than it might otherwise have been) that to a computer, a matrix is an array of arrays, a set of rows inside a column, so all the pieces of the row are next to each other, and it can load them all into the register at once to add them all if it is adding rows, but if it is adding columns, it can't, and has to go fetch each value one at a time (which is also why none of the optimizations really did much for that one). 
+
+\end{document}

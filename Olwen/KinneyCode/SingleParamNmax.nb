@@ -1,0 +1,409 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 11.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     16090,        401]
+NotebookOptionsPosition[     15240,        370]
+NotebookOutlinePosition[     15594,        386]
+CellTagsIndexPosition[     15551,        383]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "Putting", " ", "in", " ", "required", " ", "known", " ", "constants"}], 
+   " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"\[Mu]", " ", "=", " ", 
+    RowBox[{"Sqrt", "[", 
+     RowBox[{"3", "/", 
+      RowBox[{"(", 
+       RowBox[{"16", " ", "\[Pi]"}], ")"}]}], "]"}]}], 
+   RowBox[{"(*", 
+    RowBox[{
+    "You", " ", "have", " ", "to", " ", "tell", " ", "it", " ", "where", " ", 
+     "to", " ", "start", " ", "looking", " ", "for", " ", "the", " ", "end", 
+     " ", "of", " ", "inflation"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"\[Delta]", " ", "=", " ", 
+     RowBox[{"4.5", "*", 
+      SuperscriptBox["10", 
+       RowBox[{"-", "5"}]]}]}], " ", ";", 
+    RowBox[{"(*", 
+     RowBox[{
+     "I", " ", "think", " ", "this", " ", "is", " ", "the", " ", "current", 
+      " ", "value", " ", 
+      RowBox[{"I", "'"}], "m", " ", "using"}], "*)"}], "\[IndentingNewLine]", 
+    
+    RowBox[{"(*", " ", 
+     RowBox[{"Potential", ",", " ", 
+      RowBox[{"without", " ", "normalization"}]}], " ", "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"V", "[", "\[Theta]_", "]"}], " ", "=", " ", 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"1", " ", "-", " ", 
+        RowBox[{"Exp", "[", 
+         RowBox[{
+          RowBox[{"-", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{"16", " ", 
+             RowBox[{"\[Pi]", "/", "3"}]}], "]"}]}], "\[Theta]"}], "]"}]}], 
+       " ", ")"}], "2"]}], ";", " ", 
+    RowBox[{"(*", " ", 
+     RowBox[{"\[Theta]", " ", "is", " ", 
+      RowBox[{"\[Phi]", "/", "M"}]}], " ", "*)"}], "\[IndentingNewLine]", 
+    "\[IndentingNewLine]", 
+    RowBox[{"(*", " ", 
+     RowBox[{"Slow", "-", 
+      RowBox[{"roll", " ", "parameters"}]}], " ", "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{"(*", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"H", "[", "\[Theta]_", "]"}], "=", 
+       SqrtBox[
+        RowBox[{
+         FractionBox[
+          RowBox[{"8", " ", "\[Pi]"}], 
+          RowBox[{"3", " ", 
+           SuperscriptBox["M", "2"]}]], 
+         RowBox[{"V", "[", "\[Theta]", "]"}]}]]}], ";"}], "*)"}], 
+    "\[IndentingNewLine]", 
+    RowBox[{
+     RowBox[{"\[Epsilon]", "[", "\[Phi]_", "]"}], " ", ":=", " ", 
+     RowBox[{
+      FractionBox["1", 
+       RowBox[{"16", " ", "\[Pi]"}]], 
+      SuperscriptBox[
+       RowBox[{"(", 
+        FractionBox[
+         RowBox[{
+          RowBox[{"V", "'"}], "[", "\[Phi]", "]"}], 
+         RowBox[{"V", "[", "\[Phi]", "]"}]], ")"}], "2"]}]}], ";"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+    "Field", " ", "Value", " ", "at", " ", "the", " ", "end", " ", "of", " ", 
+     "inflation"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"\[Theta]e", " ", "=", 
+    RowBox[{"Re", "[", 
+     RowBox[{"x", "/.", " ", 
+      RowBox[{"FindRoot", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"\[Epsilon]", "[", "x", "]"}], "\[Equal]", "1"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"x", ",", "\[Mu]"}], " ", "}"}]}], "]"}]}], "]"}]}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Nume", "[", 
+     RowBox[{"\[Theta]_", "?", "NumberQ"}], "]"}], ":=", 
+    RowBox[{"Re", "[", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"8", " ", "\[Pi]"}], ")"}], " ", 
+      RowBox[{"NIntegrate", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"V", "[", "xx", "]"}], "/", 
+         RowBox[{
+          RowBox[{"V", "'"}], "[", "xx", "]"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"xx", ",", " ", "\[Theta]e", ",", "\[Theta]"}], "}"}]}], 
+       "]"}]}], "]"}]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{
+     RowBox[{"Field", " ", "value", " ", "NN", " ", "e"}], "-", 
+     RowBox[{"folds", " ", "before", " ", "the", " ", "end", " ", "of", " ", 
+      RowBox[{"inflation", ".", " ", "Exact"}], " ", 
+      RowBox[{"answer", ":"}]}]}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"\[Theta]N", "[", "NN_", "]"}], " ", ":=", " ", 
+    RowBox[{"Re", "[", 
+     RowBox[{"y", "/.", " ", 
+      RowBox[{"FindRoot", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"Nume", "[", "y", "]"}], " ", "\[Equal]", " ", "NN"}], ",", 
+        " ", 
+        RowBox[{"{", 
+         RowBox[{"y", ",", "\[Theta]e"}], "}"}]}], "]"}]}], "]"}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", "Normalization", " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Vend", "[", "NN_", "]"}], ":=", " ", 
+    RowBox[{
+     FractionBox[
+      RowBox[{"3", 
+       SuperscriptBox["\[Delta]", "2"]}], 
+      RowBox[{"128", "\[Pi]"}]], 
+     SuperscriptBox[
+      RowBox[{"(", 
+       FractionBox[
+        RowBox[{
+         RowBox[{"V", "'"}], "[", 
+         RowBox[{"\[Theta]N", "[", "NN", "]"}], "]"}], 
+        RowBox[{" ", 
+         RowBox[{"V", "[", 
+          RowBox[{"\[Theta]N", "[", "NN", "]"}], "]"}]}]], ")"}], "2"], 
+     RowBox[{"(", 
+      FractionBox[
+       RowBox[{"V", "[", "\[Theta]e", "]"}], 
+       RowBox[{"V", "[", 
+        RowBox[{"\[Theta]N", "[", "NN", "]"}], "]"}]], ")"}]}]}], 
+   "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Reheat", " ", "Temperature"}], " ", "*)"}], 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"Trh", "[", "NN_", "]"}], ":=", 
+    SuperscriptBox[
+     RowBox[{"Vend", "[", "NN", "]"}], 
+     RowBox[{"1", "/", "4"}]]}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+   RowBox[{"(*", " ", 
+    RowBox[{"Max", " ", "N"}], " ", "*)"}], "\[IndentingNewLine]", 
+   RowBox[{"NM", " ", "=", " ", 
+    RowBox[{"Re", "[", 
+     RowBox[{"yy", "/.", " ", 
+      RowBox[{"FindRoot", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"yy", "-", 
+          RowBox[{"Log", "[", 
+           RowBox[{"Trh", "[", "yy", "]"}], "]"}]}], "\[Equal]", "68"}], ",", 
+        
+        RowBox[{"{", 
+         RowBox[{"yy", ",", "60"}], "}"}]}], "]"}]}], "]"}]}]}]}]], "Input",
+ CellChangeTimes->{{3.7014353566751137`*^9, 3.701435389466673*^9}, {
+   3.70143625093312*^9, 3.701436251783403*^9}, {3.701437315098688*^9, 
+   3.7014373302178707`*^9}, 3.701437528457754*^9, {3.701438062419771*^9, 
+   3.7014380633663177`*^9}, {3.7014386173919477`*^9, 
+   3.7014386447278423`*^9}, {3.701438773246593*^9, 3.701438774965684*^9}, 
+   3.7014388724573803`*^9, {3.70143904833193*^9, 3.701439053624619*^9}}],
+
+Cell[BoxData[
+ FractionBox[
+  SqrtBox[
+   FractionBox["3", "\[Pi]"]], "4"]], "Output",
+ CellChangeTimes->{{3.701435377474165*^9, 3.7014353897822723`*^9}, 
+   3.701436200569005*^9, 3.701436252553947*^9, 3.7014371318552217`*^9, {
+   3.701437319851151*^9, 3.70143733083204*^9}, 3.701437544323598*^9, 
+   3.70143806387475*^9, 3.7014386198986197`*^9, 3.7014388735928793`*^9, 
+   3.701439055752287*^9}],
+
+Cell[BoxData["0.1875382872912625`"], "Output",
+ CellChangeTimes->{{3.701435377474165*^9, 3.7014353897822723`*^9}, 
+   3.701436200569005*^9, 3.701436252553947*^9, 3.7014371318552217`*^9, {
+   3.701437319851151*^9, 3.70143733083204*^9}, 3.701437544323598*^9, 
+   3.70143806387475*^9, 3.7014386198986197`*^9, 3.7014388735928793`*^9, 
+   3.70143905578265*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "FindRoot","nlnum",
+   "\"The function value \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{RowBox[{\\\"0.`\\\", \\\"\[VeryThinSpace]\\\"}], \\\"-\\\", \
+RowBox[{\\\"1.`\\\", \\\" \\\", \\\"yy\\\"}]}], \\\"}\\\"}]\\) is not a list \
+of numbers with dimensions \\!\\(\\*RowBox[{\\\"{\\\", \\\"1\\\", \\\"}\\\"}]\
+\\) at \\!\\(\\*RowBox[{\\\"{\\\", \\\"y\\\", \\\"}\\\"}]\\) = \
+\\!\\(\\*RowBox[{\\\"{\\\", \\\"0.1875382872912625`\\\", \\\"}\\\"}]\\).\"",2,
+   74,25,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.7014390558092213`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"FindRoot\\\", \\\"[\\\", \
+RowBox[{RowBox[{RowBox[{\\\"Nume\\\", \\\"[\\\", \\\"y\\\", \\\"]\\\"}], \\\"\
+\[Equal]\\\", \\\"yy\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"y\\\", \
+\\\",\\\", \\\"\[Theta]e\\\"}], \\\"}\\\"}]}], \\\"]\\\"}], \\\"}\\\"}]\\) is \
+neither a list of replacement rules nor a valid dispatch table, and so cannot \
+be used for replacing.\"",2,74,26,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.7014390558454533`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "FindRoot","nlnum",
+   "\"The function value \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{RowBox[{\\\"0.`\\\", \\\"\[VeryThinSpace]\\\"}], \\\"-\\\", \
+RowBox[{\\\"1.`\\\", \\\" \\\", \\\"yy\\\"}]}], \\\"}\\\"}]\\) is not a list \
+of numbers with dimensions \\!\\(\\*RowBox[{\\\"{\\\", \\\"1\\\", \\\"}\\\"}]\
+\\) at \\!\\(\\*RowBox[{\\\"{\\\", \\\"y\\\", \\\"}\\\"}]\\) = \
+\\!\\(\\*RowBox[{\\\"{\\\", \\\"0.1875382872912625`\\\", \\\"}\\\"}]\\).\"",2,
+   74,27,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.701439055882031*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"FindRoot\\\", \\\"[\\\", \
+RowBox[{RowBox[{RowBox[{\\\"Nume\\\", \\\"[\\\", \\\"y\\\", \\\"]\\\"}], \\\"\
+\[Equal]\\\", \\\"yy\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"y\\\", \
+\\\",\\\", \\\"\[Theta]e\\\"}], \\\"}\\\"}]}], \\\"]\\\"}], \\\"}\\\"}]\\) is \
+neither a list of replacement rules nor a valid dispatch table, and so cannot \
+be used for replacing.\"",2,74,28,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.7014390559177027`*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "FindRoot","nlnum",
+   "\"The function value \\!\\(\\*RowBox[{\\\"{\\\", \
+RowBox[{RowBox[{\\\"0.`\\\", \\\"\[VeryThinSpace]\\\"}], \\\"-\\\", \
+RowBox[{\\\"1.`\\\", \\\" \\\", \\\"yy\\\"}]}], \\\"}\\\"}]\\) is not a list \
+of numbers with dimensions \\!\\(\\*RowBox[{\\\"{\\\", \\\"1\\\", \\\"}\\\"}]\
+\\) at \\!\\(\\*RowBox[{\\\"{\\\", \\\"y\\\", \\\"}\\\"}]\\) = \
+\\!\\(\\*RowBox[{\\\"{\\\", \\\"0.1875382872912625`\\\", \\\"}\\\"}]\\).\"",2,
+   74,29,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.701439055947311*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"FindRoot\\\", \
+\\\"::\\\", \\\"nlnum\\\"}], \\\"MessageName\\\"]\\) will be suppressed \
+during this calculation.\"",2,74,30,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.701439055973312*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "ReplaceAll","reps",
+   "\"\\!\\(\\*RowBox[{\\\"{\\\", RowBox[{\\\"FindRoot\\\", \\\"[\\\", \
+RowBox[{RowBox[{RowBox[{\\\"Nume\\\", \\\"[\\\", \\\"y\\\", \\\"]\\\"}], \\\"\
+\[Equal]\\\", \\\"yy\\\"}], \\\",\\\", RowBox[{\\\"{\\\", RowBox[{\\\"y\\\", \
+\\\",\\\", \\\"\[Theta]e\\\"}], \\\"}\\\"}]}], \\\"]\\\"}], \\\"}\\\"}]\\) is \
+neither a list of replacement rules nor a valid dispatch table, and so cannot \
+be used for replacing.\"",2,74,31,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.701439056002151*^9}],
+
+Cell[BoxData[
+ TemplateBox[{
+  "General","stop",
+   "\"Further output of \\!\\(\\*StyleBox[RowBox[{\\\"ReplaceAll\\\", \
+\\\"::\\\", \\\"reps\\\"}], \\\"MessageName\\\"]\\) will be suppressed during \
+this calculation.\"",2,74,32,32232740267892541756,"Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{{3.7014353774834833`*^9, 3.701435389792946*^9}, 
+   3.701436200580398*^9, 3.701436252562359*^9, 3.7014371318963127`*^9, {
+   3.701437319880415*^9, 3.701437330859573*^9}, 3.7014375442859097`*^9, 
+   3.7014380638303347`*^9, 3.7014386198695183`*^9, 3.701438873703264*^9, 
+   3.701439056030072*^9}],
+
+Cell[BoxData["60.29350692223081`"], "Output",
+ CellChangeTimes->{{3.701435377474165*^9, 3.7014353897822723`*^9}, 
+   3.701436200569005*^9, 3.701436252553947*^9, 3.7014371318552217`*^9, {
+   3.701437319851151*^9, 3.70143733083204*^9}, 3.701437544323598*^9, 
+   3.70143806387475*^9, 3.7014386198986197`*^9, 3.7014388735928793`*^9, 
+   3.701439057896492*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(*", " ", 
+   RowBox[{
+   "And", " ", "checking", " ", "to", " ", "make", " ", "sure", " ", "it", 
+    " ", "worked", " ", "properly"}], " ", "*)"}], "\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{
+    RowBox[{"fff", "[", "X_", "]"}], ":=", 
+    RowBox[{"X", "-", 
+     RowBox[{"Log", "[", 
+      RowBox[{"Trh", "[", "X", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+   RowBox[{"fff", "[", "NM", "]"}]}]}]], "Input",
+ CellChangeTimes->{{3.701437144265107*^9, 3.701437204871188*^9}}],
+
+Cell[BoxData["68.`"], "Output",
+ CellChangeTimes->{3.701437206420987*^9, 3.701437550752429*^9, 
+  3.7014390627578697`*^9}]
+}, Open  ]]
+},
+WindowSize->{808, 655},
+WindowMargins->{{20, Automatic}, {Automatic, 44}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 6393, 174, 612, "Input"],
+Cell[6976, 198, 396, 8, 74, "Output"],
+Cell[7375, 208, 355, 5, 32, "Output"],
+Cell[7733, 215, 874, 15, 24, "Message"],
+Cell[8610, 232, 864, 14, 42, "Message"],
+Cell[9477, 248, 872, 15, 24, "Message"],
+Cell[10352, 265, 864, 14, 42, "Message"],
+Cell[11219, 281, 872, 15, 24, "Message"],
+Cell[12094, 298, 614, 11, 24, "Message"],
+Cell[12711, 311, 862, 14, 42, "Message"],
+Cell[13576, 327, 615, 11, 24, "Message"],
+Cell[14194, 340, 355, 5, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14586, 350, 513, 13, 75, "Input"],
+Cell[15102, 365, 122, 2, 66, "Output"]
+}, Open  ]]
+}
+]
+*)
+

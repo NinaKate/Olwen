@@ -1,0 +1,105 @@
+%
+% This is a comment. It does not appear in the final document. All comments
+% are on lines that start with a percent sign.
+%
+%
+% All documents start with a \documentclass command. This one is to user
+% the revtex4 macro package from the APS, used for Physical Review.
+\documentclass[preprint,aps]{revtex4}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{tensor}
+%
+% This loads a package for displaying figures. An example of how to display
+% a figure is below.
+%
+\usepackage{graphicx}
+
+%
+% All documents start with this command in LaTeX.
+%
+\begin{document}
+
+
+Begin with the potential you want. You only want the form, in terms of $\theta=\phi/\mu$. The next part of the code is putting in external parameters; planck mass, the range of M that you want to take, and the range of w, observational values of the CMB temp, that sort of thing. Next, we use the slow roll approximation formulae to calculate the slow roll parameters in terms of M and $\theta$. Using the fact that for most inflationary potentials, the end of inflation is taken to be the point when $\epsilon=1$, we find $\theta_{end}$ by running a findroot on $\epsilon=1$. Next, we set up the equation for the number of e-folds as a function of the value of $\theta$ you start at and M, since we now have $\theta_{end}$ as a known quantity.
+
+Inverting this, we establish an equation for the field value $\theta$ N e-folds before the end of inflation, that is, $\theta_k$, as a function of $N_k$ and M. 
+
+Next, we establish the formulae for $r$ and $n_s$ as functions of $N_k$ and M, building them out of our already defined equations for the slow roll parameters and something called CC, which I don't actually know what that is, I took it from your code and meant to ask about it but forgot. I don't actually know the physics behind these relations, for all I know it's just a question of definitions, like the slow roll parameters. 
+
+The normalization is where some of my steps are kind of condensed and not shown; I'm using the known observable $\delta$ to determine the amplitude of my potential, that is, $V_0$.  The equation in question here is the two-point correlation function for curvature perturbation,
+\begin{equation}
+\delta^2 = \frac{H^2}{\pi m_{pl}^2 \epsilon}\vert_k
+\end{equation}
+which is taken directly from your TASI lectures. Anyway, this allows us to solve for $V_0$, which means that we now have the full equation for the potential (as opposed to just the form). The last line in this section is the formula for $H_k$, normalized and \textit{dimensionalized}, since I actually need $m_{pl}\neq 1$ for my $H_k$ coming up. 
+
+
+Next, I have a bunch of known parameters (I took my values from the most recent Planck results,\cite{Planck} ). I find the value of $a_{eq}$ by noting that the energy density for radiation, $\rho_r$, goes as $a^{-4}$, while the matter energy density $\rho_m$ goes as $a^{-3}$; consequently, the ratio of matter and radiation energy density goes as the scale factor: 
+\begin{equation}
+\frac{\rho_m}{\rho_r} \propto \frac{a^{-3}}{a^{-4}} = a, 
+\end{equation}
+and thus 
+\begin{equation}
+a_{eq}=\frac{\rho_{r0}}{\rho_{m0}},
+\end{equation}
+as shown in \cite{caltech}. 
+
+To continue, we can find the Hubble parameter via the Friedmann equation; taking curvature and cosmological constant both to be negligible in the early universe, this reduces to 
+\begin{equation}
+H^2 = \frac{8}{3}\pi G \left(\rho_m+\rho_r \right),
+\end{equation}
+if we define $y=a / a_{eq}=\rho_m/\rho_r$, we can rewrite this as: 
+\begin{equation}
+H^2 = \Omega_m H_0^2 a_{eq}^{-3}y^{-3}\left(1+\frac{1}{y}\right).
+\end{equation}
+Since I want $H_{eq}$, which by definition occurs at $y=1$, this simplifies to:
+\begin{equation}
+H_{eq}=\sqrt{2\Omega_m H_0^2 a_{eq}^{-3}}.
+\end{equation}
+
+I also create a step function for the number of relativistic degrees of freedom as a function of reheat temperature ($g_{s,re}$). 
+
+So, now I want to get the number of e-folds of expansion during radiation dominance, that is, between the end of reheating (nucleosynthesis or earlier) and matter-radiation equality. This depends on when reheating ends, and I am going to use the reheat temperature as a measure for the end of reheating. At any rate, if I go back to the original paper (\cite{SourceP}), I find that they have $N_{RD}$ defined as $\ln{\frac{a_{eq}}{a_{re}}}$, where $a_{re}$ is the value of $a$ at the end of reheating. Thus, we need to find the scale factor at the end of reheating; this is related to the reheat temperature by 
+\begin{equation}
+\frac{T_{re}}{T_0}=\left(\frac{43}{11g_{s,re}}\right)^{1/3}\frac{a_0}{a_re}
+\end{equation}
+\cite{SouceP}(I'm not sure if you want me to try to explain the physics behind that?) 
+
+Anyway, this equation can be straightforwardly rearranged to give an equation for $a_{re}$ in terms of $T_{re}$, which I then plug into my equation for $N_{RD}$. Huzzah! 
+
+Now, the reason I wanted the number of e-folds of expansion during radiation domination was the fact that I am constraining the total number of e-folds of expansion by the following equation: 
+\begin{equation}
+ N_{re} = -N_k-N_{RD}+\ln{\frac{a_{eq}H_{eq}}{a_0H_0}}+\ln{\frac{H_k}{H_{eq}}}-\ln{\frac{k}{a_0H_0}}
+ \label{matching}
+ \end{equation}
+ Basically, if a mode that exited the horizon at the pivot scale is now re-entering the horizon, then the comoving hubble scale $a_kH_k$ at the time of exit is related to the \textit{current} comoving Hubble scale, and actually this is hardly "physics" so much as juggling with numbers, just take $ \frac{k}{a_0H_0} = \frac{a_kH_k}{a_0H_0}$ and multiply top and bottom by $a_{end}a_{re}a_{eq}H_{eq}$, rearrange and take the natural log, and presto. 
+So this is a very robust constraint, you're just making substitutions and multiplying by 1. 
+
+CARRYING ON. We now have a formula for the number of e-folds of expansion during reheating as a function of reheat temperature and the number of e-folds of inflation. Now, reheat temperature is going to depend on the following: equation of state during reheating ($w_{re}$), number of e-folds during reheating, number of relativistic degrees of freedom at the end of reheating (which is going to depend on the reheat temperature, so this is a little recursive), and the energy density at the end of inflation, which is just $\frac{3}{2}V_{end}$. 
+
+I should probably take a moment to explain that the way I'm doing this in the end is that, to get the number of e-folds of inflation, you tell the code what your mass is (or rather, the ratio of your mass scale to the planck mass), the equation of state you want for reheating, and what you want the reheat temperature to be (as a proxy for when reheating ends). Then, the code will loop around for a bunch of values of the parameters, each time calculating the reheat temperature for the various values, and it gives back the value of $N_k$ for which that M and $w_{re}$ combination result in the calculated reheat temperature equalling the requested reheat temperature. So that what's happening here is that the reheat temperature \textit{calculated} is dependant on the reheat temperature \textit{provided.} 
+
+So, then, if I now go through in a more coherent story narrative order, rather than a line by line code order, what happens is this: 
+\begin{itemize}
+\item You provide the form of your potential, an equation of state, mass ratio, and reheat temperature. 
+\item the potential form is used to determine the normalization for your potential (along with the curvature perturbations, which are an observable) and provide equations for the Hubble parameter and the slow roll parameters. 
+\item having determined these, the provided reheat temperature is used to determine the number of relativistic degrees of freedom and the number of e-folds of expansion during radiation dominance. 
+\item using the constraint on the total number of e-folds of expansion (\ref{matching}), we write $N_{re}$ as a function of $N_k$; the only other dependencies are on the provided reheat temperature and M. 
+\item using $N_{re}$ and the equation of state parameter $w_{re}$, we calculate the reheat temperature as a function of the provided parameters; by cycling through a range of values of $N_k$, the code finds what value of $N_k$ results in the calculated reheat temperature matching the provided value. 
+
+\end{itemize}
+\begin{thebibliography}{9}
+
+\bibitem{Planck}
+Most recent Planck results, \url{https://www.aanda.org/articles/aa/pdf/2016/10/aa25830-15.pdf}.
+\bibitem{caltech}
+Caltech prof's lecture notes, had useful formulae for me,\url{http://www.tapir.caltech.edu/~chirata/ph217/lec06.pdf}
+\bibitem{SourceP}
+That first paper I took my methodology from, \url{https://arxiv.org/pdf/1412.0656.pdf}
+\end{thebibliography} 
+\end{document}
+

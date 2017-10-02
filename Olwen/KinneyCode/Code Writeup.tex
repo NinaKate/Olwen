@@ -1,0 +1,72 @@
+%
+% This is a comment. It does not appear in the final document. All comments
+% are on lines that start with a percent sign.
+%
+%
+% All documents start with a \documentclass command. This one is to user
+% the revtex4 macro package from the APS, used for Physical Review.
+\documentclass[preprint,aps]{revtex4}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{tensor}
+%
+% This loads a package for displaying figures. An example of how to display
+% a figure is below.
+%
+\usepackage{graphicx}
+
+%
+% All documents start with this command in LaTeX.
+%
+\begin{document}
+Alright, I'm skipping the bits that are unchanged from the Nmax code, starting where I pick up from there.  
+\subsection{Code setup: What I Am Doing And How}
+I have $H_k$ as a function of $N_k$ and M, just the standard formula, only I have an $m_{pl}$ in front because I had been working in units of $m_{pl}$ as they all dropped out in the end when I was just getting $N_{max}$, but this is one of the places where they matter. 
+
+Next, I have a bunch of known parameters (I took my values from the most recent Planck results,\cite{Planck} ). My formulae for $a_{eq}$ and $H_{eq}$ come from \cite{caltech}, though I used the updated values for things like $\Omega_mh^2$ and $H_0$, and converted all non-dimensionless values to eV. As an aside, I can get three different values for $a_{eq}$: First, by using the formula in my code with the modern value of $\Omega_mh^2$, and that gives me about $3.5*10^{-4}$, a second by using the generally accepted/cited value of $z_{eq}$, namely 3400, which gives $2.9*10^{-4}$, and a third by using the formula $a_{eq}=\frac{\rho_{r0}}{\rho_{m0}}$ and the more recent value for the current matter density of the universe given by the Planck data, which gives me $a_{eq}=2.6*10^{-4}$. I don't think that these numbers are different enough to cause problems, however. 
+
+If I go back to the original paper (\cite{SourceP}), I find that they have $N_{RD}$ defined as $\ln{\frac{a_{eq}}{a_{re}}}$, where $a_{re}$ is the value of $a$ at the end of reheating, which I'm taking to be nucleosynthesis. Since they actually started with $\log{\frac{a_{eq}}{a_{re}}}$ and then substituted $N_{RD}$ in for that, that is clearly the formula to use. Taking the $t[\frac{a}{a_{eq}}]$ formula from \cite{caltech}, I trial-and-error'd to find that, at 250s after the big bang (which appears to be dead in the middle of the 200-300s range for nucleosynthesis), $\frac{a}{a_{eq}}=0.00001$, so that I have established that $\frac{a_{re}}{a_{eq}}=0.00001$, and I can just take the natural log of that to get 11.513.
+
+ DEEP BREATH. Now we get to the "matching e-folds" part, which is where I start to get a little less confident. The equation, for reference, is: 
+ \begin{equation}
+ N_{re} = -N_k-N_{RD}+\ln{\frac{a_{eq}H_{eq}}{a_0H_0}}+\ln{\frac{H_k}{H_{eq}}}-\ln{\frac{k}{a_0H_0}}
+ \end{equation}
+ Now, of these terms, only two of them will vary depending on the inflationary potential: $N_k$ and $\ln{\frac{H_k}{H_{eq}}}$. The rest are going to be independent of inflationary potential--in fact, fixed, known values. Thus, I can simplify this equation to: 
+ \begin{equation}
+ N_{re} = -N_k+\ln{\frac{H_k}{H_{eq}}}-13.0807.
+ \end{equation}
+ So that we now have $N_{re}$ as a function of $N_k$. Next, in order to get $T_{rh}$, I plug that into this equation, taken directly from \cite{SourceP}:
+ \begin{equation}
+ T_{re}=\exp\left[-\frac{3}{4}(1+w_{re})N_{re}\right]\left(\frac{3}{10\pi^2}\right)^{1/4}\left(1+\lambda\right)^{1/4}V_{end}^{1/4},
+ \end{equation}
+where $\lambda$ is defined as $\lambda = \frac{1}{3/\epsilon-1}$, so $\lambda\approx 1/2$ at the end of inflation. Also, in my code, it is necessary to add a coefficient of $m_{pl}$ because I had dropped it (since the log method I had been using for the $N_{max}$ has this cancel immediately, as it calls for $\ln{\frac{T_{re}}{m_{pl}}}$). 
+
+Anyway, I now have two methods to try to get from $T_{rh}$ to $N_{min}$, the first being the one I used to get $N_{max}$, which is not working. I am disregarding that method for the moment. 
+
+The second method takes the approach that "I know what the temperature was at nucleosynthesis, I shall declare that the reheat temperature must be this". Thus, I simply use FindRoot to find the value of $N_k$ for which $T_{rh}$ is 50,000eV. This appears to be working, if imperfectly. 
+
+\subsection{Notes on what exactly is going wrong and what I think may be the problem}
+\subsubsection{Results}
+Method 1 is not working. It produces a lot more error messages than method 2, and after 384 seconds (I used Timing ) it produced a result of $N_k=-69$. 
+
+Method 2 appears to be working, but gives a larger range of potential $N_{min}$ values than expected; if I use the smallest possible value of w, $w=-1/3$, I get values of $N_{min}$ around 11, which does not seem to agree with the normal limiting range. Note, however, that if I restrict myself to $w\geq 0$, I get much more reasonable results, though still a bit low. If I increase w above about .4 (at least for the potential I'm working with at the moment) I start getting $N_{min} \approx 60$. If I continue to increase w, at some point the function breaks down and it just returns my initial starting value. 
+
+I also observe that I'm pretty consistently getting that $\ln{\frac{H_k}{H_{eq}}}$ is something around 115, for a couple of different potentia, so that you have a comprable number or in fact \textit{more} e-folds of expansion during reheating as during inflation. This may or may not be bad. 
+
+\subsubsection{Possible Sources of Error}
+And this part is now me hypothesizing/speculating as to what could be causing my issues. The first possibility is that some assumption I am making is unsound; perhaps there is some reason why I shouldn't make reheating last all the way to nucleosynthesis in all cases, or something. The second possibility is that there is a bound or constraint of some kind that I am not taking into account. Both of these assume I haven't made any mistakes otherwise; I am not certain that this is the case, though if it isn't, I can't find my mistake. 
+\begin{thebibliography}{9}
+
+\bibitem{Planck}
+Most recent Planck results, \url{https://www.aanda.org/articles/aa/pdf/2016/10/aa25830-15.pdf}.
+\bibitem{caltech}
+Caltech prof's lecture notes, had useful formulae for me,\url{http://www.tapir.caltech.edu/~chirata/ph217/lec06.pdf}
+\bibitem{SourceP}
+That first paper I took my methodology from, \url{https://arxiv.org/pdf/1412.0656.pdf}
+\end{thebibliography} 
+\end{document}
+
