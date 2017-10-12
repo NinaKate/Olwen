@@ -29,6 +29,11 @@ ax.semilogy(x1,y1,label=r'$\theta^2$ potential')
 ax.text(x1[0],y1[0],Nmin1,size=12,rotation=0,fontweight='roman')
 ax.text(x1[last],y1[last],Nmax1,size=12,rotation=0,fontweight='roman')
 
+#[x1a,y1a,Nmin1a,Nmax1a,last] = read_data('SquaredM.dat')
+#ax.semilogy(x1a,y1a,label=r'$\theta^2$ potential, running mass')
+#ax.text(x1a[0],y1a[0],Nmin1a,size=12,rotation=0,fontweight='roman')
+#ax.text(x1a[last],y1a[last],Nmax1a,size=12,rotation=0,fontweight='roman')
+
 [x2,y2,Nmin2,Nmax2,last] = read_data('oneminus40.dat')
 ax.semilogy(x2,y2,label=r'$1-\theta^4$ potential')
 ax.text(x2[0],y2[0],Nmin2,size=12,rotation=0,fontweight='roman')
@@ -48,10 +53,7 @@ ax.text(x4[last],y4[last],Nmax4,size=12,rotation=0,fontweight='roman')
 ax.semilogy(x5,y5,label='Starobinsky Potential')
 ax.text(x5[0],y5[0],Nmin5,size=12,rotation=0,fontweight='roman')
 ax.text(x5[last],y5[last],Nmax5,size=12,rotation=0,fontweight='roman')
-[x5,y5,Nmin5,Nmax5,last] = read_data('Starobinskyw2.dat')
-ax.semilogy(x5,y5,label='Starobinsky Potential')
-ax.text(x5[0],y5[0],Nmin5,size=12,rotation=0,fontweight='roman')
-ax.text(x5[last],y5[last],Nmax5,size=12,rotation=0,fontweight='roman')
+
 
 [x6,y6,Nmin6,Nmax6,last] = read_data('twothirds0.dat')
 ax.semilogy(x6,y6,label=r'$\theta^{2/3}$ potential')

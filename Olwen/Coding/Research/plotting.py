@@ -6,32 +6,32 @@ import PlanckData
 
 def read_data(filename,potlabel) :
     with open(filename,'r') as file:
-    lines = file.readlines()
-    x = []
-    y = []
-    z = []
-    for line in lines :
-        if line != '\n' :
-            words = line.split()
-            ix, iy, iz = [float(s) for s in words]
-            x.append( ix )
-            y.append( iy )
-            z.append( iz )
-    plt.semilogy(x,y,label=potlabel)
-    last = len(z)-1
-    Nmin = int(round(z[0]))
-    Nmax = int(round(z[last]))
-    plt.text(x[0],y[0],Nmin,size=12,rotation=0,fontweight='roman')
-    plt.text(x[last],y[last],Nmax,size=12,rotation=0,fontweight='roman')
+	lines = file.readlines()
+	x = []
+	y = []
+	z = []
+	for line in lines :
+		if line != '\n' :
+			words = line.split()
+			ix, iy, iz = [float(s) for s in words]
+			x.append( ix )
+			y.append( iy )
+			z.append( iz )
+	plt.semilogy(x,y,label=potlabel)
+	last = len(z)-1
+	Nmin = int(round(z[0]))
+	Nmax = int(round(z[last]))
+	plt.text(x[0],y[0],Nmin,size=12,rotation=0,fontweight='roman')
+	plt.text(x[last],y[last],Nmax,size=12,rotation=0,fontweight='roman')
 with open('Squared0.dat','r') as file1:
-    lines = file1.readlines()
-    x1 = []
-    y1 = []
-    z1 = []
-    for line in lines :
-        if line != '\n' :
-            words = line.split()
-            ix, iy, iz = [float(s) for s in words]
+	lines = file1.readlines()
+	x1 = []
+	y1 = []
+	z1 = []
+	for line in lines :
+		if line != '\n' :
+			words = line.split()
+			ix, iy, iz = [float(s) for s in words]
             x1.append( ix )
             y1.append( iy )
             z1.append( iz )
