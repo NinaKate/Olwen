@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.9.24)  16 OCT 2017 11:56
+=======
 This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.8.24)  19 OCT 2017 14:49
+>>>>>>> cba820ae604f0ec327552b6d22ab9663420059d3
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -499,6 +503,24 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] (./H0 t
 able.aux) ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
+ 1962 strings out of 494910
+ 22919 string characters out of 6179836
+ 83397 words of memory out of 5000000
+ 5257 multiletter control sequences out of 15000+600000
+ 9044 words of font info for 36 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
+ 27i,14n,32p,282b,306s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmsy7.pfb>
+Output written on "H0 table.pdf" (1 page, 71984 bytes).
+=======
  1950 strings out of 493027
  22890 string characters out of 6134069
  90182 words of memory out of 5000000
@@ -514,6 +536,7 @@ i7.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10
 b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
 Output written on "H0 table.pdf" (1 page, 74613 bytes).
+>>>>>>> cba820ae604f0ec327552b6d22ab9663420059d3
 PDF statistics:
  36 PDF objects out of 1000 (max. 8388607)
  25 compressed objects within 1 object stream

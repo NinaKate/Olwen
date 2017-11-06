@@ -257,24 +257,30 @@ class Cluster :
         self.set_variables(p)
         poten = self.potential_energy()
         return poten
-    def MetropolisMinimize(self,Steps,walkers):
-        delta = 0.00024
-        min = self.potential_energy()
+    def MetropolisMinimize(self,Steps,walkers,delta):
+        #delta = 0.24
+        #runs = 10	
+        mine = self.potential_energy()
         minvars = self.get_variables()
         orivars = self.get_variables()
+        #for m in range(runs):
+		 #   delta = delta/m
+          #  print "checking"
         for i in range(walkers):
+				#print "testiung"
             check = random.uniform(-1,1)
             if check>0:
-                self.set_variables(minvars)
+               	self.set_variables(minvars)
             else:
-                self.set_variables(orivars)
-            for j in range(Steps):
-                testp = self.MetropolisStep(delta)
-                if testp<min:
-                    min=testp
-                    minvars = self.get_variables()
-        self.set_variables(minvars)
-        return min
+               	self.set_variables(orivars)
+           	for j in range(Steps):
+				testp= self.MetropolisStep(delta)
+				
+				if (testp < mine):
+					mine=testp
+					minvars = self.get_variables()
+       		self.set_variables(minvars)
+        return mine
 
     
 
