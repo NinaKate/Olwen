@@ -1,0 +1,145 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 import os\
+import sys\
+\
+sys.path.append( os.path.abspath('../cpt_python'))\
+\
+__\
+import numpy\
+\
+\
+import cpt\
+from sympy import *\
+__\
+\
+So the first thing is to establish the symbols I want to use, and the parameters $\\lambda$, $M_pl$ and $m$, which I do not want to have as symbols because that way lies problems. \
+__\
+phi = symbols("phi")\
+a,a1,a2,a3 = symbols("a a1 a2 a3 ")\
+Mpl = 1.0\
+lamb = 1.0\
+m = 1.0\
+\
+__\
+Next we have to do the thing that is the first real user input, namely define our V($\\phi$) function (which can be a function of $\\lambda$ and $m$ as well):\
+__\
+Vphi = lamb*phi**4.0\
+__\
+So next we take the derivative with respect to $\\phi$:\
+\
+__\
+Vprime = diff(Vphi,phi)\
+__\
+This next bit establishes the formulae for $V(\\phi)$ and $V'(\\phi)$ as functions of $a$ and the temporal derivatives thereof:\
+___\
+Va = Mpl**2.*(2*(a1/a)**2.+a2/a)\
+Vprimea = Mpl*(3*a1*a2/a**2.+a3/a-4*(a1/a)**3.)/(2*((a1/a)**2.-a2/a))*0.5\
+__\
+Next we have to solve $V(\\phi)=Mpl^2(2* (a1/a)^2+a2/a)$ to get $\\phi$ as a function of $a$ and its derivatives:\
+__\
+solve(Eq(Vphi-Va,0),phi)\
+___\
+Alright, so above you see all the various solutions (there will probably be multiple roots). Pick whichever one you like; I'm going for "positive and real". You will want to copy and paste the solution you want into the bit after "phi," in the next line, remembering to add . after the various intergers in the exponents (so that 1/4 becomes 1./4.) \
+\
+This is basically just subsituting the selected solution/function of $a$s into the $V'$ function, so that we can eliminate $\\phi$ and find a differential equation on $a$.\
+\
+___\
+Vpa = Vprime.subs(phi,(Mpl**2.*a2/(a*lamb) + 2.0*Mpl**2*a1**2/(a**2*lamb))**(1./4.))\
+solve(Eq(Vprimea-Vpa,0),a3)\
+~~\
+Above: The differential equation for $\\dddot a$, which gets plugged into the formula for a3 below--note that you have to set Mpl, $\\lambda$ and $m$ when you call the class Inflaton, and so you should convert Mpl to just M for this definition, also lamb to lambd and--actually m is probably fine:\
+~~\
+class Inflaton :\
+    def __init__( self,M,lambd,m ):\
+        self.M=M\
+        self.lambd = lambd\
+        self.m = m\
+    def __call__(self, p ) :\
+        t = p[0]\
+        a = p[1]\
+        a1 = p[2]\
+        a2 = p[3]\
+        phi = p[4]\
+        tau = p[5]\
+        \
+        a3 = (-3.0*M*a*a1*a2 + 4.0*M*a1**3 - 16.0*a**2*a2*lambd*(M**2*(a*a2 + 2.0*a1**2)/(a**2*lambd))**(3./4.) + 16.0*a*a1**2.*lambd*(Mpl**2*(a*a2 + 2.0*a1**2.)/(a**2.*lambd))**(3./4.))/(M*a**2.)\
+        phidot = M*(2*((a1/a)**2-a2/a))**0.5\
+        taudot = 1/a\
+        flow = [ 1, a1, a2, a3, phidot,taudot ]\
+        return flow\
+\
+~~~\
+Now that we have defined our class/function for the inflaton flow, we need to initalize, including specifying our step size dt and accuracy. Also, we need to establish the initial conditions. We can, without loss of generality, take $\\phi_0=0$, and start the system arbitrarily close to rest ($\\dot \\phi$ cannot ACTUALLY be zero, but I can take it arbitrarily close), which lets us use the definitions of $H$ and $\\dot H$ to get our starting conditions on $\\dot a$ and $\\ddot a$ in terms of $a$. At this stage it is also important to initialize Mpl (I am setting it to 1) before the inflaton call. \
+\
+Anyway, the following is the box of Things You Are Allowed To Alter:\
+\
+~~\
+M=1 #Mpl is now set to 1, all subsequent references to Mpl should be Ms\
+lamb = 1\
+m =1 \
+inflaton=Inflaton(M,lamb,m);\
+dt = 0.1 #put the step size here\
+accuracy = 1e-5 #desired accuracy for adaptive integration\
+\
+a0 = 1.0 #put whatever scale factor you like here for the starting point\
+phi0 = 0.0 #I can do this without loss of generality, but some potentials might have this not be the convenient thing\
+t0 = 0.0 #I am just starting at t=0 for now\
+tau0 = 0.0 #Not sure how general this is but sure\
+~~~\
+So then this is the box of Things You Should Not Be Trying To Change (functional definitions and the vector initialization with the various definitions that have been established):\
+~~~\
+a10 = (a0**2./(3*M**2.)*Vphi.subs(phi,phi0))**0.5\
+a20 = a10**2./a0\
+#Initialize vector\
+xv = [0.0]*6\
+xv[0] = t0 \
+xv[1] = a0 \
+xv[2] = a10 \
+xv[3] = a20\
+xv[4] = phi0\
+xv[5] = tau0\
+\
+~~\
+Now I must make an aside to get an equation for $\\epsilon$, so that I can do the ARK4 loop inside a while loop which will stop the integration when we reach the end of inflation at $\\epsilon=1$.\
+\
+~~~\
+def epsilon(p,A,A1,A2):\
+    pd = (2*M**2.*((A1/A)**2.-A2/A))\
+    eps = 3*(1-Vphi.subs(phi,p)/(Vphi.subs(phi,p)+0.5*pd))\
+    return eps\
+\
+~~~\
+Of course, it is possible that we will want to end inflation at some other time, not $\\epsilon = 1$, so I add a clause to allow for selection--if you want to end it at some other condition, change "endcond" to True:\
+~~~\
+endcond=False\
+\
+tau_plot = []\
+a_plot = []\
+phi_plot = []\
+dt_min = 1e-3\
+dt_max = 1\
+\
+if endcond:\
+    phiend = 3 #put whatever your end condition should be here\
+    while (xv[4]<phiend):\
+        tau_plot.append(xv[5])\
+        a_plot.append(xv[1])\
+        phi_plot.append(xv[4])\
+        dt =RK4_adaptive_step(xv,dt,inflaton,accuracy)\
+        dt_min = min(dt,dt_min)\
+        dt_max = max(dt,dt_max)\
+else: \
+    while epsilon(xv[4],xv[1],xv[2],xv[3])<1:\
+        tau_plot.append(xv[5])\
+        a_plot.append(xv[1])\
+        phi_plot.append(xv[4])\
+        dt =RK4_adaptive_step(xv,dt,inflaton,accuracy)\
+        dt_min = min(dt,dt_min)\
+        dt_max = max(dt,dt_max)\
+        }
